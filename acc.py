@@ -25,14 +25,12 @@ def acceleration_pattern(accel_rate=10, cruise_speed=80, decel_rate=10, cruise_d
             if current_speed > cruise_speed:
                 current_speed = cruise_speed
             droid.roll(0, current_speed, 1)  # Provide direction and duration.
-            #time.sleep(0.1)  # Wait for the motion to take effect.
+            time.sleep(0.1)  # Wait for the motion to take effect.
 
         # Cruise phase: maintain the speed for a fixed duration.
         print("Cruising")
-        start_time = time.time()
-        while time.time() - start_time < cruise_duration:
-            droid.roll(0, cruise_speed, 1)  # Repeated roll to maintain motion
-            #time.sleep(0.1)  # Maintain speed
+        droid.roll(0,current_speed,cruise_duration)
+        time.sleep(0.1)  #Cruise for cruise_duration seconds.
 
         # Decelerate phase: decrease the speed gradually to zero
         while current_speed > 0:
@@ -41,7 +39,7 @@ def acceleration_pattern(accel_rate=10, cruise_speed=80, decel_rate=10, cruise_d
             if current_speed < 0:
                 current_speed = 0
             droid.roll(0, current_speed, 1)  # Continue forward while slowing down
-            #time.sleep(0.1)  # Wait for the motion to take effect.
+            time.sleep(0.1)  # Wait for the motion to take effect.
 
         # Final stop: ensure the bot is completely stationary.
         droid.roll(0, 0, 1)  # Stop completely (speed 0)
